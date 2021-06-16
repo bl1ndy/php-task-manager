@@ -7,7 +7,7 @@ setup:
 	php artisan key:gen --ansi
 	npm install
 	touch database/database.sqlite
-	php artisan migrate
+	php artisan migrate:fresh
 
 watch:
 	npm run watch
