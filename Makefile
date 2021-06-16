@@ -8,6 +8,7 @@ setup:
 	npm install
 	touch database/database.sqlite
 	php artisan migrate:fresh
+	npm install
 
 watch:
 	npm run watch
