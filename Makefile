@@ -2,7 +2,7 @@ start:
 	php artisan serve
 
 setup:
-	composer install --prefer-source
+	composer install
 	cp -n .env.example .env|| true
 	php artisan key:gen --ansi
 	npm install
