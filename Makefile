@@ -2,10 +2,11 @@ start:
 	php artisan serve
 
 setup:
-	composer install
+	composer install --prefer-source
 	cp -n .env.example .env|| true
 	php artisan key:gen --ansi
 	npm install
+	touch database/database.sqlite
 
 watch:
 	npm run watch
