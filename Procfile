@@ -1,2 +1,2 @@
-release: php artisan -n migrate
+release: yes | php artisan migrate:fresh
 web: vendor/bin/heroku-php-apache2 public/
