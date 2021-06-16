@@ -37,7 +37,7 @@
                             <a class="nav-link" href="#">Задачи</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Статусы</a>
+                            <a class="nav-link" href="{{ route('task_statuses.index') }}">Статусы</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Метки</a>
