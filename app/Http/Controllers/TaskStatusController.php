@@ -24,7 +24,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('task_status.create');
     }
 
     /**
