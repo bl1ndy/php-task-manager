@@ -5,7 +5,6 @@ setup:
 	composer install
 	cp -n .env.example .env|| true
 	php artisan key:gen --ansi
-	npm install
 	touch database/database.sqlite
 	php artisan migrate:fresh
 	npm install
