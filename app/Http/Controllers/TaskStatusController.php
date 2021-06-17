@@ -14,7 +14,8 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        return view('task_status.index');
+        $taskStatuses = TaskStatus::paginate();
+        return view('task_status.index', compact('taskStatuses'));
     }
 
     /**
@@ -24,7 +25,8 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        return view('task_status.create');
+        $taskStatus = new TaskStatus();
+        return view('task_status.create', compact('taskStatus'));
     }
 
     /**
@@ -35,7 +37,16 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|unique:task_statuses',
+        ]);
+
+        $taskStatus = new TaskStatus();
+        $taskStatus->fill($data);
+        $taskStatus->save();
+
+        return redirect()
+            ->route('task_statuses.index');
     }
 
     /**
