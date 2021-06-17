@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TaskStatusController extends Controller
 {
@@ -25,6 +26,8 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create');
+
         $taskStatus = new TaskStatus();
         return view('task_status.create', compact('taskStatus'));
     }
@@ -44,6 +47,8 @@ class TaskStatusController extends Controller
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data);
         $taskStatus->save();
+
+        flash('Статус успешно создан')->success();
 
         return redirect()
             ->route('task_statuses.index');
@@ -68,7 +73,9 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        //
+        Gate::authorize('update');
+
+        return view('task_status.edit', compact('taskStatus'));
     }
 
     /**
@@ -80,7 +87,17 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => 'required|unique:task_statuses,' . $taskStatus->id,
+        ]);
+
+        $taskStatus->fill($data);
+        $taskStatus->save();
+
+        flash('Статус успешно изменён')->success();
+
+        return redirect()
+            ->route('task_statuses.index');
     }
 
     /**
