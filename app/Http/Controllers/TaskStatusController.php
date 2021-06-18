@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class TaskStatusController extends Controller
 {
@@ -88,7 +89,10 @@ class TaskStatusController extends Controller
     public function update(Request $request, TaskStatus $taskStatus)
     {
         $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses,' . $taskStatus->id,
+            'name' => [
+                'required',
+                Rule::unique('task_statuses')->ignore($taskStatus->id),
+            ]
         ]);
 
         $taskStatus->fill($data);
