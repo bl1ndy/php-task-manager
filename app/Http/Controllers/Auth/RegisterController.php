@@ -74,7 +74,7 @@ class RegisterController extends Controller
 
         Mail::to($user)->send(new UserRegistered());
 
-        flash('Вы успешно зарегистрированы')->success();
+        flash(__('messages.registration.success'))->success();
 
         return $user;
     }
