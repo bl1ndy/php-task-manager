@@ -35,13 +35,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Задачи</a>
+                            <a class="nav-link" href="#">@lang('layouts.app.tasks')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('task_statuses.index') }}">Статусы</a>
+                            <a class="nav-link" href="{{ route('task_statuses.index') }}">@lang('layouts.app.statuses')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Метки</a>
+                            <a class="nav-link" href="#">@lang('layouts.app.tags')</a>
                         </li>
                     </ul>
 
@@ -51,13 +51,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Вход') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">@lang('layouts.app.login')</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Регистрация') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">@lang('layouts.app.register')</a>
                                 </li>
                             @endif
                         @else
@@ -70,7 +70,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Выйти') }}
+                                        @lang('layouts.app.logout')
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

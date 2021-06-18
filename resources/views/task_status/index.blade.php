@@ -1,20 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="mb-5">Статусы</h1>
+    <h1 class="mb-5">@lang('views.task_status.index.statuses')</h1>
 
     @can('create')
-        <a href="{{ route('task_statuses.create') }}" class="btn btn-primary">Создать статус</a>
+        <a href="{{ route('task_statuses.create') }}" class="btn btn-primary">@lang('views.task_status.index.buttons.create')</a>
     @endcan
 
     <table class="table mt-2">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Имя</th>
-                <th>Дата создания</th>
+                <th>@lang('models.task_status.id')</th>
+                <th>@lang('models.task_status.name')</th>
+                <th>@lang('models.task_status.created_at')</th>
                 @can('destroy')
-                    <th>Действия</th>
+                    <th>@lang('views.task_status.index.actions')</th>
                 @endcan
             </tr>
         </thead>
@@ -26,8 +26,8 @@
                 <td>{{ $status->created_at }}</td>
                 @can('destroy')
                     <td>
-                        <a class="text-danger" href="" data-confirm="Вы уверены?" data-method="delete">Удалить</a>
-                        <a href="{{ route('task_statuses.edit', $status) }}">Изменить</a>
+                        <a class="text-danger" href="" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>
+                        <a href="{{ route('task_statuses.edit', $status) }}">@lang('views.task_status.index.buttons.edit')</a>
                     </td>
                 @endcan
             </tr>
