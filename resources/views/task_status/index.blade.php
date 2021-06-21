@@ -3,7 +3,7 @@
 @section('content')
     <h1 class="mb-5">@lang('views.task_status.index.statuses')</h1>
 
-    @can('create')
+    @can('task_status_create')
         <a href="{{ route('task_statuses.create') }}" class="btn btn-primary">@lang('views.task_status.index.buttons.create')</a>
     @endcan
 
@@ -13,7 +13,7 @@
                 <th>@lang('models.task_status.id')</th>
                 <th>@lang('models.task_status.name')</th>
                 <th>@lang('models.task_status.created_at')</th>
-                @can('destroy')
+                @can('task_status_destroy')
                     <th>@lang('views.task_status.index.actions')</th>
                 @endcan
             </tr>
@@ -24,7 +24,7 @@
                 <td>{{ $status->id }}</td>
                 <td>{{ $status->name }}</td>
                 <td>{{ $status->created_at }}</td>
-                @can('destroy')
+                @can('task_status_destroy')
                     <td>
                         <a class="text-danger" href="" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>
                         <a href="{{ route('task_statuses.edit', $status) }}">@lang('views.task_status.index.buttons.edit')</a>
