@@ -2,8 +2,17 @@
 
 return [
     'task_status' => [
-        'id' => 'Id',
+        'id' => 'ID',
         'name' => 'Имя',
+        'created_at' => 'Дата создания'
+    ],
+    'task' => [
+        'id' => 'ID',
+        'name' => 'Имя',
+        'description' => 'Описание',
+        'status' => 'Статус',
+        'author' => 'Автор',
+        'executor' => 'Исполнитель',
         'created_at' => 'Дата создания'
     ]
 ];

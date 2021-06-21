@@ -23,5 +23,28 @@ return [
                 'update' => 'Обновить',
             ]
         ]
+    ],
+    'task' => [
+        'index' => [
+            'tasks' => 'Задачи',
+            'actions' => 'Действия',
+            'buttons' => [
+                'create' => 'Создать задачу',
+                'edit' => 'Изменить',
+                'delete' => 'Удалить'
+            ]
+        ],
+        'create' => [
+            'create_task' => 'Создать задачу',
+            'buttons' => [
+                'create' => 'Создать'
+            ]
+        ],
+        'edit' => [
+            'edit_task' => 'Изменение задачи',
+            'buttons' => [
+                'update' => 'Обновить',
+            ]
+        ]
     ]
 ];
