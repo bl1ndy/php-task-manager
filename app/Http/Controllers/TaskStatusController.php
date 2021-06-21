@@ -27,7 +27,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        Gate::authorize('create');
+        Gate::authorize('task_status_create');
 
         $taskStatus = new TaskStatus();
         return view('task_status.create', compact('taskStatus'));
@@ -74,7 +74,7 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        Gate::authorize('update');
+        Gate::authorize('task_status_update');
 
         return view('task_status.edit', compact('taskStatus'));
     }
