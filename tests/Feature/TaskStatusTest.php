@@ -75,6 +75,6 @@ class TaskStatusTest extends TestCase
         $response = $this->actingAs($user)->delete(route('task_statuses.destroy', [$taskStatus]));
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-        $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->id]);
+        $this->assertSoftDeleted('task_statuses', ['id' => $taskStatus->id]);
     }
 }
