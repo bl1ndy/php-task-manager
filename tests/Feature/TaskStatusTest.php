@@ -35,7 +35,6 @@ class TaskStatusTest extends TestCase
     public function testStore(): void
     {
         $user = User::factory()->create();
-
         $data = [
             'name' => 'Test status'
         ];
@@ -43,15 +42,14 @@ class TaskStatusTest extends TestCase
         $response = $this->actingAs($user)->post(route('task_statuses.store'), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-
         $this->assertDatabaseHas('task_statuses', $data);
     }
 
     public function testEdit()
     {
         $user = User::factory()->create();
-
         $taskStatus = TaskStatus::factory()->create();
+
         $response = $this->actingAs($user)->get(route('task_statuses.edit', [$taskStatus]));
         $response->assertOk();
     }
@@ -59,24 +57,24 @@ class TaskStatusTest extends TestCase
     public function testUpdate()
     {
         $user = User::factory()->create();
-
         $taskStatus = TaskStatus::factory()->create();
         $factoryData = TaskStatus::factory()->make()->toArray();
         $data = ['name' => $factoryData['name']];
+
         $response = $this->actingAs($user)->patch(route('task_statuses.update', $taskStatus), $data);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect();
-
         $this->assertDatabaseHas('task_statuses', $data);
     }
 
-    // public function testDestroy()
-    // {
-    //     $taskStatus = TaskStatus::factory()->create();
-    //     $response = $this->delete(route('task_statuses.destroy', [$taskStatus]));
-    //     $response->assertSessionHasNoErrors();
-    //     $response->assertRedirect();
+    public function testDestroy()
+    {
+        $user = User::factory()->create();
+        $taskStatus = TaskStatus::factory()->create();
 
-    //     $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->id]);
-    // }
+        $response = $this->actingAs($user)->delete(route('task_statuses.destroy', [$taskStatus]));
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('task_statuses', ['id' => $taskStatus->id]);
+    }
 }
