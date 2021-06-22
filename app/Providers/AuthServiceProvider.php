@@ -49,7 +49,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('task_destroy', function (User $user, Task $task) {
-            return $user === $task->author;
+            return $user->id === $task->author->id;
         });
     }
 }
