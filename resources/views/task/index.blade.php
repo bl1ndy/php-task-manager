@@ -26,13 +26,15 @@
             <tr>
                 <td>{{ $task->id }}</td>
                 <td>{{ $task->status->name }}</td>
-                <td>{{ $task->name }}</td>
-                <td>{{ $task->author }}</td>
-                <td>{{ $task->executor }}</td>
+                <td><a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a></td>
+                <td>{{ $task->author->name }}</td>
+                <td>{{ $task->executor->name }}</td>
                 <td>{{ $task->created_at }}</td>
-                @can('task_create')
+                @can('task_update')  
                     <td>
-                        <a class="text-danger" href="" data-confirm="Вы уверены?" data-method="delete">@lang('views.task.index.buttons.delete')</a>
+                        @can('task_destroy', $task) 
+                            <a href="{{ route('tasks.destroy', $task) }}" data-confirm="Вы уверены?" data-method="delete" class="text-danger">@lang('views.task.index.buttons.delete')</a>
+                        @endcan
                         <a href="{{ route('tasks.edit', $task) }}">@lang('views.task.index.buttons.edit')</a>
                     </td>
                 @endcan
