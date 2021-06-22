@@ -26,7 +26,7 @@
                 <td>{{ $status->created_at }}</td>
                 @can('task_status_destroy')
                     <td>
-                        <a class="text-danger" href="" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>
+                        <a class="text-danger" href="{{ route('task_statuses.destroy', $status) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>
                         <a href="{{ route('task_statuses.edit', $status) }}">@lang('views.task_status.index.buttons.edit')</a>
                     </td>
                 @endcan
