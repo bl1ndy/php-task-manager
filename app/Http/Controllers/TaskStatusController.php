@@ -43,7 +43,7 @@ class TaskStatusController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses',
+            'name' => 'required|unique:task_statuses,name,NULL,id,deleted_at,NULL',
         ]);
 
         $taskStatus = new TaskStatus();
@@ -90,10 +90,7 @@ class TaskStatusController extends Controller
     public function update(Request $request, TaskStatus $taskStatus)
     {
         $data = $this->validate($request, [
-            'name' => [
-                'required',
-                Rule::unique('task_statuses')->ignore($taskStatus->id),
-            ]
+            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id . ',id,deleted_at,NULL',
         ]);
 
         $taskStatus->fill($data);
