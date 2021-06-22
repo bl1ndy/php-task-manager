@@ -52,7 +52,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $data = $this->validate($request, [
-            'name' => 'required|unique:tasks',
+            'name' => 'required|unique:tasks,name,NULL,id,deleted_at,NULL',
             'status_id' => 'required',
             'description' => '',
             'assigned_to_id' => ''
