@@ -111,10 +111,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $data = $this->validate($request, [
-            'name' => [
-                'required',
-                Rule::unique('tasks')->ignore($task->id),
-            ],
+            'name' => 'required|unique:tasks,name,' . $task->id . ',id,deleted_at,NULL',
             'status_id' => 'required',
             'description' => '',
             'assigned_to_id' => ''
