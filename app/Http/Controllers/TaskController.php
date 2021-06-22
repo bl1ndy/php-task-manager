@@ -54,6 +54,7 @@ class TaskController extends Controller
         $data = $this->validate($request, [
             'name' => 'required|unique:tasks',
             'status_id' => 'required',
+            'description' => '',
             'assigned_to_id' => ''
         ]);
 
@@ -76,7 +77,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        $statusName = TaskStatus::find($task->status_id)->name;
+        return view('task.show', compact('task', 'statusName'));
     }
 
     /**
@@ -87,7 +89,16 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        Gate::authorize('task_update');
+
+        $taskStatuses = TaskStatus::all()
+            ->mapWithKeys(fn($status) => [$status->id => $status->name])
+            ->all();
+        $executors = User::all()
+            ->mapWithKeys(fn($user) => [$user->id => $user->name])
+            ->all();
+
+        return view('task.edit', compact('task', 'taskStatuses', 'executors'));
     }
 
     /**
@@ -99,7 +110,23 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $data = $this->validate($request, [
+            'name' => [
+                'required',
+                Rule::unique('tasks')->ignore($task->id),
+            ],
+            'status_id' => 'required',
+            'description' => '',
+            'assigned_to_id' => ''
+        ]);
+
+        $task->fill($data);
+        $task->save();
+
+        flash(__('messages.task.update.success'))->success();
+
+        return redirect()
+            ->route('tasks.index');
     }
 
     /**
@@ -110,6 +137,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        flash(__('messages.task.delete.success'))->success();
+        return redirect()
+            ->route('tasks.index');
     }
 }
