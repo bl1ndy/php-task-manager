@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLabelRequest;
+use App\Http\Requests\UpdateLabelRequest;
 use App\Models\Label;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -18,7 +19,7 @@ class LabelController extends Controller
     {
         $labels = Label::paginate();
 
-        return view('labels.index', compact('labels'));
+        return view('label.index', compact('labels'));
     }
 
     /**
@@ -32,7 +33,7 @@ class LabelController extends Controller
 
         $label = new label();
 
-        return view('labels.create', compact('label'));
+        return view('label.create', compact('label'));
     }
 
     /**
@@ -86,9 +87,17 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateLabelRequest $request, Label $label)
     {
-        //
+        $data = $request->validated();
+
+        $label->fill($data);
+        $label->save();
+
+        flash(__('messages.label.update.success'))->success();
+
+        return redirect()
+            ->route('labels.index');
     }
 
     /**
@@ -97,8 +106,16 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Label $label)
     {
-        //
+        if ($label->tasks->isNotEmpty()) {
+            flash(__('messages.label.delete.fail'))->error();
+        } else {
+            $label->delete();
+            flash(__('messages.label.delete.success'))->success();
+        }
+
+        return redirect()
+            ->route('labels.index');
     }
 }
