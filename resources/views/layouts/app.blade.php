@@ -42,7 +42,7 @@
                             <a class="nav-link" href="{{ route('task_statuses.index') }}">@lang('layouts.app.statuses')</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">@lang('layouts.app.tags')</a>
+                            <a class="nav-link" href="#">@lang('layouts.app.labels')</a>
                         </li>
                     </ul>
 
