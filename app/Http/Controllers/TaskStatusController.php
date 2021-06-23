@@ -108,7 +108,7 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        if (Task::where('status_id', $taskStatus->id)->get()->isNotEmpty()) {
+        if ($taskStatus->tasks->isNotEmpty()) {
             flash(__('messages.task_status.delete.fail'))->error();
         } else {
             $taskStatus->delete();
