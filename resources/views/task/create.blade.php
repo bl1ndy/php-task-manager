@@ -30,6 +30,10 @@
         {{ Form::label('assigned_to_id', __('models.task.executor')) }}
         {{ Form::select('assigned_to_id', $executors, null, ['class' => 'form-control', 'placeholder' => '----------']) }}
     </div>
+    <div class="form-group">
+        {{ Form::label('labels', __('views.label.index.labels')) }}
+        {{ Form::select('labels[]', $labels, null, ['multiple' => 'multiple', 'class' => 'form-control', 'placeholder' => '']) }}
+    </div>
     {{ Form::submit(__('views.task.create.buttons.create'), ['class' => 'btn btn-primary']) }}
 {{ Form::close() }}
 
