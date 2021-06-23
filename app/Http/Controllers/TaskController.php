@@ -7,10 +7,10 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use Illuminate\Http\Request;
+use App\Models\Label;
+use App\Models\LabelTask;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
@@ -41,8 +41,11 @@ class TaskController extends Controller
         $executors = User::all()
             ->mapWithKeys(fn($user) => [$user->id => $user->name])
             ->all();
+        $labels = Label::all()
+            ->mapWithKeys(fn($label) => [$label->id => $label->name])
+            ->all();
 
-        return view('task.create', compact('task', 'taskStatuses', 'executors'));
+        return view('task.create', compact('task', 'taskStatuses', 'executors', 'labels'));
     }
 
     /**
@@ -60,6 +63,17 @@ class TaskController extends Controller
         $task->created_by_id = Auth::user()->id;
         $task->save();
 
+        if (isset($data['labels']) && !is_null($data['labels'][0])) {
+            foreach ($data['labels'] as $labelId) {
+                $LabelByTask = new LabelTask();
+                $LabelByTask->fill([
+                    'label_id' => $labelId,
+                    'task_id' => $task->id
+                ]);
+                $LabelByTask->save();
+            }
+        }
+
         flash(__('messages.task.create.success'))->success();
 
         return redirect()
@@ -75,7 +89,8 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $statusName = TaskStatus::find($task->status_id)->name;
-        return view('task.show', compact('task', 'statusName'));
+        $labels = $task->labels;
+        return view('task.show', compact('task', 'statusName', 'labels'));
     }
 
     /**
@@ -94,8 +109,14 @@ class TaskController extends Controller
         $executors = User::all()
             ->mapWithKeys(fn($user) => [$user->id => $user->name])
             ->all();
+        $labels = Label::all()
+            ->mapWithKeys(fn($label) => [$label->id => $label->name])
+            ->all();
+        $selectedLabels = collect($task->labels)
+            ->map(fn($label) => $label->id)
+            ->all();
 
-        return view('task.edit', compact('task', 'taskStatuses', 'executors'));
+        return view('task.edit', compact('task', 'taskStatuses', 'executors', 'labels', 'selectedLabels'));
     }
 
     /**
@@ -111,6 +132,18 @@ class TaskController extends Controller
 
         $task->fill($data);
         $task->save();
+        LabelTask::where('task_id', $task->id)->delete();
+
+        if (isset($data['labels']) && !is_null($data['labels'][0])) {
+            foreach ($data['labels'] as $labelId) {
+                $LabelByTask = new LabelTask();
+                $LabelByTask->fill([
+                    'label_id' => $labelId,
+                    'task_id' => $task->id
+                ]);
+                $LabelByTask->save();
+            }
+        }
 
         flash(__('messages.task.update.success'))->success();
 
