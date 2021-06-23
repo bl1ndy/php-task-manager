@@ -6,11 +6,13 @@
     <p>@lang('models.task.name'): {{ $task->name }}</p>
     <p>@lang('models.task.status'): {{ $statusName }}</p>
     <p>@lang('models.task.description'): {{ $task->description}}</p>
-    <p>@lang('views.task.show.tags'): </p>
-    <ul>
-        @foreach ($labels as $label)
-            <li>{{ $label->name }}</li>
-        @endforeach
-    </ul>
-    
+    @if ($labels->isNotEmpty())
+        <p>@lang('views.task.show.tags'): </p>
+        <ul>
+            @foreach ($labels as $label)
+                <li>{{ $label->name }}</li>
+            @endforeach
+        </ul>
+    @endif
+
 @endsection
