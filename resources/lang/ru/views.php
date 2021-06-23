@@ -50,5 +50,28 @@ return [
             'show_task' => 'Просмотр задачи',
             'tags' => 'Метки'
         ]
+    ],
+    'label' => [
+        'index' => [
+            'labels' => 'Метки',
+            'actions' => 'Действия',
+            'buttons' => [
+                'create' => 'Создать метку',
+                'edit' => 'Изменить',
+                'delete' => 'Удалить'
+            ]
+        ],
+        'create' => [
+            'create_label' => 'Создать метку',
+            'buttons' => [
+                'create' => 'Создать'
+            ]
+        ],
+        'edit' => [
+            'edit_label' => 'Изменение метки',
+            'buttons' => [
+                'update' => 'Обновить',
+            ]
+        ],
     ]
 ];
