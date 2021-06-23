@@ -13,6 +13,10 @@
             </div>
         @enderror
     </div>
+    <div class="form-group">
+        {{ Form::label('description', __('models.label.description')) }}
+        {{ Form::textarea('description', null, ['class' => 'form-control']) }}
+    </div>
     {{ Form::submit(__('views.label.create.buttons.create'), ['class' => 'btn btn-primary']) }}
 {{ Form::close() }}
 
