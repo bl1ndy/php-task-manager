@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -49,14 +51,9 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:tasks,name,NULL,id,deleted_at,NULL',
-            'status_id' => 'required',
-            'description' => '',
-            'assigned_to_id' => ''
-        ]);
+        $data = $request->validated();
 
         $task = new Task();
         $task->fill($data);
@@ -108,14 +105,9 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:tasks,name,' . $task->id . ',id,deleted_at,NULL',
-            'status_id' => 'required',
-            'description' => '',
-            'assigned_to_id' => ''
-        ]);
+        $data = $request->validated();
 
         $task->fill($data);
         $task->save();

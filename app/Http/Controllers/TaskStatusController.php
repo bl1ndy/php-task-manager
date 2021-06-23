@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskStatusRequest;
+use App\Http\Requests\UpdateTaskStatusRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
@@ -40,11 +42,9 @@ class TaskStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTaskStatusRequest $request)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses,name,NULL,id,deleted_at,NULL',
-        ]);
+        $data = $request->validated();
 
         $taskStatus = new TaskStatus();
         $taskStatus->fill($data);
@@ -87,11 +87,9 @@ class TaskStatusController extends Controller
      * @param  \App\Models\TaskStatus  $taskStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TaskStatus $taskStatus)
+    public function update(UpdateTaskStatusRequest $request, TaskStatus $taskStatus)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id . ',id,deleted_at,NULL',
-        ]);
+        $data = $request->validated();
 
         $taskStatus->fill($data);
         $taskStatus->save();
