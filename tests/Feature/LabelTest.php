@@ -49,7 +49,6 @@ class LabelTest extends TestCase
     {
         $user = User::factory()->create();
         $label = Label::factory()->create();
-
         $response = $this->actingAs($user)->get(route('labels.edit', [$label]));
         $response->assertOk();
     }
