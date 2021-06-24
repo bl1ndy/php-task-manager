@@ -2,11 +2,20 @@
 
 @section('content')
     <h1 class="mb-5">@lang('views.task.index.tasks')</h1>
+    <div class="d-flex">
+        <div>
+            {{ Form::open(['url' => route('tasks.index'), 'method' => 'GET', 'class' => 'form-inline']) }}
+                {{ Form::select('filter[status_id]', $taskStatuses, $searchParams['status_id'] ?? null, ['placeholder' => __('models.task.status'), 'class' => 'form-control mr-2']) }}
+                {{ Form::select('filter[created_by_id]', $authors, $searchParams['created_by_id'] ?? null, ['placeholder' => __('models.task.author'), 'class' => 'form-control mr-2']) }}
+                {{ Form::select('filter[assigned_to_id]', $executors, $searchParams['assigned_to_id'] ?? null, ['placeholder' => __('models.task.executor'), 'class' => 'form-control mr-2']) }}
+                {{ Form::submit(__('views.task.index.buttons.submit'), ['class' => 'btn btn-outline-primary mr-2']) }}
+            {{ Form::close() }}
+        </div>
+        @can('task_create')
+            <a href="{{ route('tasks.create') }}" class="btn btn-primary ml-auto">@lang('views.task.index.buttons.create')</a>
+        @endcan
 
-    @can('task_create')
-        <a href="{{ route('tasks.create') }}" class="btn btn-primary">@lang('views.task.index.buttons.create')</a>
-    @endcan
-
+    </div>
     <table class="table mt-2">
         <thead>
             <tr>
