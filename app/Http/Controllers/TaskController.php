@@ -9,8 +9,11 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Label;
 use App\Models\LabelTask;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -19,10 +22,26 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::paginate();
-        return view('task.index', compact('tasks'));
+        $taskStatuses = TaskStatus::all()
+            ->mapWithKeys(fn($status) => [$status->id => $status->name])
+            ->all();
+        $authors = User::all()
+            ->mapWithKeys(fn($user) => [$user->id => $user->name])
+            ->all();
+        $executors = $authors;
+        $searchParams = $request->input('filter');
+
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters([
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            ])
+            ->paginate();
+
+        return view('task.index', compact('tasks', 'taskStatuses', 'authors', 'executors', 'searchParams'));
     }
 
     /**
