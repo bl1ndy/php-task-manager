@@ -29,7 +29,6 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        return $this->from('bl1ndy@task-manager.com')
-                    ->view('emails.users.registered');
+        return $this->view('emails.users.registered');
     }
 }
