@@ -13,13 +13,30 @@ use Illuminate\Validation\Rule;
 class TaskStatusController extends Controller
 {
     /**
+     * Set how many tasks display per page.
+     *
+     * @var integer
+     */
+    private $statusesPerPage = 10;
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class, 'task_status');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $taskStatuses = TaskStatus::paginate();
+        $taskStatuses = TaskStatus::paginate($this->statusesPerPage);
         return view('task_status.index', compact('taskStatuses'));
     }
 
@@ -30,8 +47,6 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        Gate::authorize('task_status_create');
-
         $taskStatus = new TaskStatus();
         return view('task_status.create', compact('taskStatus'));
     }
@@ -75,8 +90,6 @@ class TaskStatusController extends Controller
      */
     public function edit(TaskStatus $taskStatus)
     {
-        Gate::authorize('task_status_update');
-
         return view('task_status.edit', compact('taskStatus'));
     }
 
