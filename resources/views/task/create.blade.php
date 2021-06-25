@@ -19,7 +19,7 @@
     </div>
     <div class="form-group">
         {{ Form::label('status_id', __('models.task.status')) }}
-        {{ Form::select('status_id', $taskStatuses, 1, ['class' => $errors->get('status_id') ? 'form-control is-invalid' : 'form-control']) }}
+        {{ Form::select('status_id', $taskStatuses, null, ['class' => $errors->get('status_id') ? 'form-control is-invalid' : 'form-control', 'placeholder' => '----------']) }}
         @error('status_id')
             <div class="invalid-feedback">
                 {{ $message }}
