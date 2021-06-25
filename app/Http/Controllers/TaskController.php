@@ -88,7 +88,7 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->fill($data);
-        $task->created_by_id = Auth::user()->id;
+        $task->created_by_id = Auth::user() !== null ? Auth::user()->id : null;
         $task->save();
 
         if (isset($data['labels'][0])) {
