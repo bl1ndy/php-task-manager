@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreLabelRequest;
-use App\Http\Requests\UpdateLabelRequest;
+use App\Http\Requests\{StoreLabelRequest, UpdateLabelRequest};
 use App\Models\Label;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class LabelController extends Controller
 {

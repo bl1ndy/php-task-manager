@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTaskStatusRequest;
-use App\Http\Requests\UpdateTaskStatusRequest;
-use App\Models\Task;
-use App\Models\TaskStatus;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\{StoreTaskStatusRequest, UpdateTaskStatusRequest};
+use App\Models\{Task, TaskStatus};
 
 class TaskStatusController extends Controller
 {

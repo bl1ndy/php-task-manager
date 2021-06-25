@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use App\Models\TaskStatus;
-use App\Models\User;
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
-use App\Models\Label;
-use App\Models\LabelTask;
+use App\Models\{Task, TaskStatus, User, Label, LabelTask};
+use App\Http\Requests\{StoreTaskRequest, UpdateTaskRequest};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\{QueryBuilder, AllowedFilter};
 
 class TaskController extends Controller
 {
