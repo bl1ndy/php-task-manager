@@ -42,7 +42,7 @@ class LabelController extends Controller
      * @param  App\Http\Requests\StoreLabelRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($request)
+    public function store(StoreLabelRequest $request)
     {
         $data = $request->validated();
 
@@ -73,7 +73,7 @@ class LabelController extends Controller
      * @param  App\Models\Label $label
      * @return \Illuminate\View\View
      */
-    public function edit($label)
+    public function edit(Label $label)
     {
         Gate::authorize('label_actions');
 
@@ -87,7 +87,7 @@ class LabelController extends Controller
      * @param  App\Models\Label  $label
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($request, $label)
+    public function update(UpdateLabelRequest $request, Label $label)
     {
         $data = $request->validated();
 
@@ -106,7 +106,7 @@ class LabelController extends Controller
      * @param  App\Models\Label  $label
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($label)
+    public function destroy(Label $label)
     {
         if ($label->tasks->isNotEmpty()) {
             flash(__('messages.label.delete.fail'))->error();

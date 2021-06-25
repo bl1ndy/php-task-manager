@@ -23,7 +23,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function index($request)
+    public function index(Request $request)
     {
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn($status) => [$status->id => $status->name])
@@ -74,7 +74,7 @@ class TaskController extends Controller
      * @param  App\Http\Requests\StoreTaskRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($request)
+    public function store(StoreTaskRequest $request)
     {
         $data = $request->validated();
 
@@ -106,7 +106,7 @@ class TaskController extends Controller
      * @param  App\Models\Task  $task
      * @return \Illuminate\View\View
      */
-    public function show($task)
+    public function show(Task $task)
     {
         $statusName = TaskStatus::find($task->status_id)->name;
         $labels = $task->labels;
@@ -119,7 +119,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\View\View
      */
-    public function edit($task)
+    public function edit(Task $task)
     {
         Gate::authorize('task_update');
 
@@ -146,7 +146,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($request, $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
         $data = $request->validated();
 
@@ -177,7 +177,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($task)
+    public function destroy(Task $task)
     {
         $task->delete();
 

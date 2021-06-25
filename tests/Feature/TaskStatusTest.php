@@ -24,7 +24,7 @@ class TaskStatusTest extends TestCase
         $response->assertOk();
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $user = User::factory()->create();
 
@@ -45,7 +45,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseHas('task_statuses', $data);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $user = User::factory()->create();
         $taskStatus = TaskStatus::factory()->create();
@@ -54,7 +54,7 @@ class TaskStatusTest extends TestCase
         $response->assertOk();
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $user = User::factory()->create();
         $taskStatus = TaskStatus::factory()->create();
@@ -67,7 +67,7 @@ class TaskStatusTest extends TestCase
         $this->assertDatabaseHas('task_statuses', $data);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $user = User::factory()->create();
         $taskStatus = TaskStatus::factory()->create();

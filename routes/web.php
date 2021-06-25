@@ -18,7 +18,7 @@ use App\Models\Label;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (): Illuminate\View\View {
     return view('home');
 })->name('home');
 

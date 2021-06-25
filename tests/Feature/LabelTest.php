@@ -24,7 +24,7 @@ class LabelTest extends TestCase
         $response->assertOk();
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $user = User::factory()->create();
 
@@ -45,7 +45,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseHas('labels', $data);
     }
 
-    public function testEdit()
+    public function testEdit(): void
     {
         $user = User::factory()->create();
         $label = Label::factory()->create();
@@ -53,7 +53,7 @@ class LabelTest extends TestCase
         $response->assertOk();
     }
 
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $user = User::factory()->create();
         $label = Label::factory()->create();
@@ -66,7 +66,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseHas('labels', $data);
     }
 
-    public function testDestroy()
+    public function testDestroy(): void
     {
         $user = User::factory()->create();
         $label = Label::factory()->create();
