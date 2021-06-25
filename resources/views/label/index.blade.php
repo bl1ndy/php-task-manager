@@ -3,9 +3,9 @@
 @section('content')
     <h1 class="mb-5">@lang('views.label.index.labels')</h1>
 
-    @can('label_actions')
+    @auth
         <a href="{{ route('labels.create') }}" class="btn btn-primary">@lang('views.label.index.buttons.create')</a>
-    @endcan
+    @endauth
 
     <table class="table mt-2">
         <thead>
@@ -14,9 +14,9 @@
                 <th>@lang('models.label.name')</th>
                 <th>@lang('models.label.description')</th>
                 <th>@lang('models.label.created_at')</th>
-                @can('label_actions')
+                @auth
                     <th>@lang('views.label.index.actions')</th>
-                @endcan
+                @endauth
             </tr>
         </thead>
         <tbody>
@@ -26,12 +26,16 @@
                 <td>{{ $label->name }}</td>
                 <td>{{ $label->description }}</td>
                 <td>{{ $label->created_at->format('d.m.Y') }}</td>
-                @can('label_actions')
+                @auth
                     <td>
-                        <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.label.index.buttons.delete')</a>
-                        <a href="{{ route('labels.edit', $label) }}">@lang('views.label.index.buttons.edit')</a>
+                        @can('delete', $label)
+                            <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.label.index.buttons.delete')</a>
+                        @endcan
+                        @can('update', $label)
+                            <a href="{{ route('labels.edit', $label) }}">@lang('views.label.index.buttons.edit')</a>
+                        @endcan
                     </td>
-                @endcan
+                @endauth
             </tr>
             @endforeach
         </tbody>

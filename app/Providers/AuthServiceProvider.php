@@ -2,13 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\{Label, Task, TaskStatus};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Task;
-use App\Models\TaskStatus;
-use App\Policies\TaskPolicy;
-use App\Policies\TaskStatusPolicy;
+use App\Policies\{LabelPolicy, TaskPolicy, TaskStatusPolicy};
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Task::class => TaskPolicy::class,
-        TaskStatus::class => TaskStatusPolicy::class
+        TaskStatus::class => TaskStatusPolicy::class,
+        Label::class => LabelPolicy::class
     ];
 
     /**
@@ -30,9 +27,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::define('label_actions', function (): ?\App\Models\User {
-            return Auth::user();
-        });
     }
 }
