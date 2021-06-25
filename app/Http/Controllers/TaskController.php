@@ -71,7 +71,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\StoreTaskRequest  $request
+     * @param  \App\Http\Requests\StoreTaskRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreTaskRequest $request)
@@ -103,7 +103,7 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  App\Models\Task  $task
+     * @param  \App\Models\Task  $task
      * @return \Illuminate\View\View
      */
     public function show(Task $task)
@@ -142,7 +142,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\UpdateTaskRequest  $request
+     * @param  \App\Http\Requests\UpdateTaskRequest  $request
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\RedirectResponse
      */

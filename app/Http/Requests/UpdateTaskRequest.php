@@ -23,10 +23,8 @@ class UpdateTaskRequest extends FormRequest
      */
     public function rules()
     {
-        $task = $this->route('task');
-
         return [
-            'name' => 'required|unique:tasks,name,' . $task->id . ',id,deleted_at,NULL',
+            'name' => 'required|unique:tasks,name,' . $this->task->id . ',id,deleted_at,NULL',
             'status_id' => 'required',
             'description' => 'nullable|max:5000',
             'assigned_to_id' => 'nullable|numeric',

@@ -24,10 +24,9 @@ class UpdateTaskStatusRequest extends FormRequest
      */
     public function rules()
     {
-        $taskStatus = $this->route('task_status');
-
+        //dd($this);
         return [
-            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id . ',id,deleted_at,NULL'
+            'name' => 'required|unique:task_statuses,name,' . $this->task_status->id . ',id,deleted_at,NULL'
         ];
     }
 

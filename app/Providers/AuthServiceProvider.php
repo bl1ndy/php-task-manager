@@ -28,31 +28,31 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('task_status_create', function () {
+        Gate::define('task_status_create', function (): ?\App\Models\User {
             return Auth::user();
         });
 
-        Gate::define('task_status_update', function () {
+        Gate::define('task_status_update', function (): ?\App\Models\User {
             return Auth::user();
         });
 
-        Gate::define('task_status_destroy', function () {
+        Gate::define('task_status_destroy', function (): ?\App\Models\User {
             return Auth::user();
         });
 
-        Gate::define('task_create', function () {
+        Gate::define('task_create', function (): ?\App\Models\User {
             return Auth::user();
         });
 
-        Gate::define('task_update', function () {
+        Gate::define('task_update', function (): ?\App\Models\User {
             return Auth::user();
         });
 
-        Gate::define('task_destroy', function (User $user, Task $task) {
+        Gate::define('task_destroy', function (User $user, Task $task): bool {
             return $user->id === $task->author->id;
         });
 
-        Gate::define('label_actions', function () {
+        Gate::define('label_actions', function (): ?\App\Models\User {
             return Auth::user();
         });
     }
