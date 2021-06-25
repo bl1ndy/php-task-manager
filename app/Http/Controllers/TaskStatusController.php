@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 class TaskStatusController extends Controller
 {
     /**
-     * Set how many tasks display per page.
+     * Set how many statuses display per page.
      *
      * @var integer
      */
