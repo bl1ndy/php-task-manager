@@ -80,7 +80,7 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->fill($data);
-        $task->created_by_id = Auth::user()->id;
+        $task->created_by_id = auth()->user()->id;
         $task->save();
 
         if (isset($data['labels']) && !is_null($data['labels'][0])) {
@@ -108,9 +108,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $statusName = TaskStatus::find($task->status_id)->name;
-        $labels = $task->labels;
-        return view('task.show', compact('task', 'statusName', 'labels'));
+        return view('task.show', compact('task'));
     }
 
     /**
