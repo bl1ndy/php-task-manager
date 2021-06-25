@@ -20,9 +20,10 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index($request)
     {
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn($status) => [$status->id => $status->name])
@@ -47,7 +48,7 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -70,10 +71,10 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\StoreTaskRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreTaskRequest $request)
+    public function store($request)
     {
         $data = $request->validated();
 
@@ -102,10 +103,10 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @param  App\Models\Task  $task
+     * @return \Illuminate\View\View
      */
-    public function show(Task $task)
+    public function show($task)
     {
         $statusName = TaskStatus::find($task->status_id)->name;
         $labels = $task->labels;
@@ -116,9 +117,9 @@ class TaskController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function edit(Task $task)
+    public function edit($task)
     {
         Gate::authorize('task_update');
 
@@ -141,11 +142,11 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\UpdateTaskRequest  $request
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update($request, $task)
     {
         $data = $request->validated();
 
@@ -174,9 +175,9 @@ class TaskController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Task $task)
+    public function destroy($task)
     {
         $task->delete();
 

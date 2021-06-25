@@ -13,7 +13,7 @@ class LabelController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -25,7 +25,7 @@ class LabelController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -39,10 +39,10 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\StoreLabelRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StoreLabelRequest $request)
+    public function store($request)
     {
         $data = $request->validated();
 
@@ -62,18 +62,18 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    // public function show($id)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Models\Label $label
+     * @return \Illuminate\View\View
      */
-    public function edit(Label $label)
+    public function edit($label)
     {
         Gate::authorize('label_actions');
 
@@ -83,11 +83,11 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Http\Requests\UpdateLabelRequest  $request
+     * @param  App\Models\Label  $label
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdateLabelRequest $request, Label $label)
+    public function update($request, $label)
     {
         $data = $request->validated();
 
@@ -103,10 +103,10 @@ class LabelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  App\Models\Label  $label
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Label $label)
+    public function destroy($label)
     {
         if ($label->tasks->isNotEmpty()) {
             flash(__('messages.label.delete.fail'))->error();
