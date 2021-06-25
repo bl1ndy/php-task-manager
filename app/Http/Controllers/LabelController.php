@@ -11,13 +11,30 @@ use Illuminate\Support\Facades\Gate;
 class LabelController extends Controller
 {
     /**
+     * Set how many labels display per page.
+     *
+     * @var integer
+     */
+    private $labelsPerPage = 10;
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Label::class, 'label');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\View\View
      */
     public function index()
     {
-        $labels = Label::paginate();
+        $labels = Label::paginate($this->labelsPerPage);
 
         return view('label.index', compact('labels'));
     }
@@ -29,8 +46,6 @@ class LabelController extends Controller
      */
     public function create()
     {
-        Gate::authorize('label_actions');
-
         $label = new label();
 
         return view('label.create', compact('label'));
@@ -75,8 +90,6 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        Gate::authorize('label_actions');
-
         return view('label.edit', compact('label'));
     }
 
