@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ $status->id }}</td>
                 <td>{{ $status->name }}</td>
-                <td>{{ $status->created_at }}</td>
+                <td>{{ $status->created_at->format('d.m.Y') }}</td>
                 @can('task_status_destroy')
                     <td>
                         <a class="text-danger" href="{{ route('task_statuses.destroy', $status) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>

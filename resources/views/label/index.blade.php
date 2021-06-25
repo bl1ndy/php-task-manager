@@ -25,7 +25,7 @@
                 <td>{{ $label->id }}</td>
                 <td>{{ $label->name }}</td>
                 <td>{{ $label->description }}</td>
-                <td>{{ $label->created_at }}</td>
+                <td>{{ $label->created_at->format('d.m.Y') }}</td>
                 @can('label_actions')
                     <td>
                         <a class="text-danger" href="{{ route('labels.destroy', $label) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.label.index.buttons.delete')</a>

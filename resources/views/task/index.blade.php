@@ -38,7 +38,7 @@
                 <td><a href="{{ route('tasks.show', $task) }}">{{ $task->name }}</a></td>
                 <td>{{ $task->author->name }}</td>
                 <td>{{ $task->executor->name }}</td>
-                <td>{{ $task->created_at }}</td>
+                <td>{{ $task->created_at->format('d.m.Y') }}</td>
                 @can('task_update')  
                     <td>
                         @can('task_destroy', $task) 
