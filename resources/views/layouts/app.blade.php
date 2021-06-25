@@ -52,13 +52,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">@lang('layouts.app.login')</a>
+                                    <a class="nav-link" href="{{ route('login') }}">@lang('auth.login')</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">@lang('layouts.app.register')</a>
+                                    <a class="nav-link" href="{{ route('register') }}">@lang('auth.register')</a>
                                 </li>
                             @endif
                         @else
@@ -71,7 +71,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        @lang('layouts.app.logout')
+                                        @lang('auth.logout')
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
