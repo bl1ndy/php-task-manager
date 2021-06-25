@@ -66,11 +66,11 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        if (is_null($user)) {
+        if ($user->isEmpty()) {
             return false;
-        } elseif (is_null($task)) {
+        } elseif ($task->isEmpty()) {
             return false;
-        } elseif (is_null($task->author)) {
+        } elseif ($task->author->isEmpty()) {
             return false;
         }
         return $user->id === $task->author->id;
