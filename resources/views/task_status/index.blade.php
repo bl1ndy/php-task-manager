@@ -3,9 +3,9 @@
 @section('content')
     <h1 class="mb-5">@lang('views.task_status.index.statuses')</h1>
 
-    @can('task_status_create')
+    @auth
         <a href="{{ route('task_statuses.create') }}" class="btn btn-primary">@lang('views.task_status.index.buttons.create')</a>
-    @endcan
+    @endauth
 
     <table class="table mt-2">
         <thead>
@@ -13,9 +13,9 @@
                 <th>@lang('models.task_status.id')</th>
                 <th>@lang('models.task_status.name')</th>
                 <th>@lang('models.task_status.created_at')</th>
-                @can('task_status_destroy')
+                @auth
                     <th>@lang('views.task_status.index.actions')</th>
-                @endcan
+                @endauth
             </tr>
         </thead>
         <tbody>
@@ -24,12 +24,16 @@
                 <td>{{ $status->id }}</td>
                 <td>{{ $status->name }}</td>
                 <td>{{ $status->created_at->format('d.m.Y') }}</td>
-                @can('task_status_destroy')
+                @auth
                     <td>
-                        <a class="text-danger" href="{{ route('task_statuses.destroy', $status) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>
-                        <a href="{{ route('task_statuses.edit', $status) }}">@lang('views.task_status.index.buttons.edit')</a>
+                        @can('delete', $status)
+                            <a class="text-danger" href="{{ route('task_statuses.destroy', $status) }}" data-confirm="Вы уверены?" data-method="delete">@lang('views.task_status.index.buttons.delete')</a>
+                        @endcan
+                        @can('update', $status)
+                            <a href="{{ route('task_statuses.edit', $status) }}">@lang('views.task_status.index.buttons.edit')</a>
+                        @endcan
                     </td>
-                @endcan
+                @endauth
             </tr>
             @endforeach
         </tbody>
