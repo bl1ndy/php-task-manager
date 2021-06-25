@@ -70,7 +70,7 @@ class TaskPolicy
             return false;
         } elseif (!$task->exists()) {
             return false;
-        } elseif (!$task->author->exists()) {
+        } elseif ($task->author === null) {
             return false;
         }
         return $user->id === $task->author->id;
