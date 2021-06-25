@@ -11,9 +11,9 @@
                 {{ Form::submit(__('views.task.index.buttons.submit'), ['class' => 'btn btn-outline-primary mr-2']) }}
             {{ Form::close() }}
         </div>
-        @can('task_create')
+        @auth
             <a href="{{ route('tasks.create') }}" class="btn btn-primary ml-auto">@lang('views.task.index.buttons.create')</a>
-        @endcan
+        @endauth
 
     </div>
     <table class="table mt-2">
@@ -25,9 +25,9 @@
                 <th>@lang('models.task.author')</th>
                 <th>@lang('models.task.executor')</th>
                 <th>@lang('models.task_status.created_at')</th>
-                @can('task_create')
+                @auth
                     <th>@lang('views.task.index.actions')</th>
-                @endcan
+                @endauth
             </tr>
         </thead>
         <tbody>
@@ -39,14 +39,16 @@
                 <td>{{ $task->author->name }}</td>
                 <td>{{ $task->executor->name }}</td>
                 <td>{{ $task->created_at->format('d.m.Y') }}</td>
-                @can('task_update')  
+                @auth
                     <td>
-                        @can('task_destroy', $task) 
+                        @can('delete', $task) 
                             <a href="{{ route('tasks.destroy', $task) }}" data-confirm="Вы уверены?" data-method="delete" class="text-danger">@lang('views.task.index.buttons.delete')</a>
                         @endcan
-                        <a href="{{ route('tasks.edit', $task) }}">@lang('views.task.index.buttons.edit')</a>
+                        @can('update', $task)
+                            <a href="{{ route('tasks.edit', $task) }}">@lang('views.task.index.buttons.edit')</a>
+                        @endcan
                     </td>
-                @endcan
+                @endauth
             </tr>
             @endforeach
         </tbody>

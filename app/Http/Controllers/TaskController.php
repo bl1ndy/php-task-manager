@@ -18,6 +18,23 @@ use Spatie\QueryBuilder\QueryBuilder;
 class TaskController extends Controller
 {
     /**
+     * Set how many tasks display per page.
+     *
+     * @var integer
+     */
+    private $tasksPerPage = 10;
+
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class, 'task');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -40,7 +57,7 @@ class TaskController extends Controller
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id'),
             ])
-            ->paginate();
+            ->paginate($this->tasksPerPage);
 
         return view('task.index', compact('tasks', 'taskStatuses', 'authors', 'executors', 'searchParams'));
     }
@@ -52,8 +69,6 @@ class TaskController extends Controller
      */
     public function create()
     {
-        Gate::authorize('task_create');
-
         $task = new Task();
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn($status) => [$status->id => $status->name])
@@ -80,18 +95,11 @@ class TaskController extends Controller
 
         $task = new Task();
         $task->fill($data);
-        $task->created_by_id = auth()->user()->id;
+        $task->created_by_id = Auth::user()->id;
         $task->save();
 
-        if (isset($data['labels']) && !is_null($data['labels'][0])) {
-            foreach ($data['labels'] as $labelId) {
-                $LabelByTask = new LabelTask();
-                $LabelByTask->fill([
-                    'label_id' => $labelId,
-                    'task_id' => $task->id
-                ]);
-                $LabelByTask->save();
-            }
+        if (isset($data['labels'][0])) {
+            $task->labels()->sync($data['labels']);
         }
 
         flash(__('messages.task.create.success'))->success();
@@ -119,8 +127,6 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        Gate::authorize('task_update');
-
         $taskStatuses = TaskStatus::all()
             ->mapWithKeys(fn($status) => [$status->id => $status->name])
             ->all();
