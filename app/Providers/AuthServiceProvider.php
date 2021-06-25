@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Task;
+use App\Policies\TaskPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        //
+        Task::class => TaskPolicy::class
     ];
 
     /**
@@ -38,18 +39,6 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('task_status_destroy', function (): ?\App\Models\User {
             return Auth::user();
-        });
-
-        Gate::define('task_create', function (): ?\App\Models\User {
-            return Auth::user();
-        });
-
-        Gate::define('task_update', function (): ?\App\Models\User {
-            return Auth::user();
-        });
-
-        Gate::define('task_destroy', function (User $user, Task $task): bool {
-            return $user->id === $task->author->id;
         });
 
         Gate::define('label_actions', function (): ?\App\Models\User {
