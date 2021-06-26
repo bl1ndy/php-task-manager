@@ -66,13 +66,6 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        if (!$user->exists()) {
-            return false;
-        } elseif (!$task->exists()) {
-            return false;
-        } elseif ($task->author === null) {
-            return false;
-        }
         return $user->id === $task->author->id;
     }
 }
